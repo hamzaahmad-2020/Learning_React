@@ -26,6 +26,7 @@ const Body = () => {
         const data = await fetch(
           "http://127.0.0.1:5500/db.json"
         );
+        
         const json = await data.json();
             setRestaurant(json?.RestaurantList);
             setFilterRestaurants(json?.RestaurantList);
