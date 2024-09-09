@@ -8,6 +8,7 @@ import Error from './Components/Error';
 import Contant from './Components/Contant';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import RestaurantMenu from './Components/RestaurantMenu';
+import Profile1 from './Components/Profile1';
 
 
   
@@ -35,6 +36,12 @@ import RestaurantMenu from './Components/RestaurantMenu';
                 {
                     path: "/about",
                     element: <About />,
+                    children : [
+                        {
+                            path:"profile1",
+                            element: <Profile1 />,
+                        },
+                    ],
                     
                 },
                 {

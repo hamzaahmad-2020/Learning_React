@@ -66,3 +66,11 @@ button {
     background-color: gray;
     margin: 20px;
 }
+.footer{
+    margin-top: 15px;
+    background-color: rgb(255, 0, 0);
+    border: 1px solid black ;
+    border-radius: 5px ;
+    padding: 5px;
+    height: 80px;
+}
