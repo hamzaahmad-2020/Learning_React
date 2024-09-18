@@ -7,25 +7,25 @@ class Profile1 extends React.Component{
     super(props)
     console.log("constructor");
         this.state ={
-            Info: {
+            RestaurantList: {
                 name: "Dumy",
                 id: "dumy"
             },
         };
-        console.log(this.props.name);
     };
 
     async componentDidMount(){
         console.log("componentDidMount");
-        // const data = await fetch("http://127.0.0.1:5500/db.json");
-        // const json = await data.json();
-        // this.setState({
-        //     Info: json,
-        // })
-        // console.log(this.props.name);
-        this.timer = setInterval(() => {
-            console.log("Hamza")
-        }, 1000);
+        const data = await fetch("http://127.0.0.1:5500/menu.json");
+        const json = await data.json();
+        this.setState({
+            RestaurantList: json,
+        })
+        console.log(this.props.name);
+
+        // this.timer = setInterval(() => {
+        //     console.log("Hamza")
+        // }, 1000);
 
     };
 
@@ -35,15 +35,14 @@ class Profile1 extends React.Component{
 
     render (){
         console.log("render");
-        console.log(RestaurantList)
 
         return(
             <>
             
             <h1>Profile1</h1>
             <p>This Profile Page</p>
-            <p>Name: {this.state.Info.name}</p>
-            <h3>Id: {this.state.Info.id}</h3>
+            <p>Name: {this.state.RestaurantList.name}</p>
+            <h3>Id: {this.state.RestaurantList.id}</h3>
             </>
         );
     }

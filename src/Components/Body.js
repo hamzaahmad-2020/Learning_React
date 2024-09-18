@@ -1,22 +1,18 @@
 import RestaurantCard from "./Restaurantcard";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import { filterData } from "../Utils/Helper";
+import useOnline from "../Utils/useOnline";
+import UserContext from "../Utils/UserContext";
 
-function filterData (searchText, restaurants) {
-   const filterdata = restaurants.filter((restaurant) => 
-    restaurant.name.includes(searchText)
-   
-   );
-   return filterdata;
-   
-};
 
 
 const Body = () => {
     const [restaurants, setRestaurant] = useState([]);
     const [filterRestaurants, setFilterRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const{user, setUser} = useContext(UserContext);
 
     useEffect(() => {
         getRestaurants();
@@ -33,14 +29,21 @@ const Body = () => {
         
     }
 
-    return (restaurants.length === 0) ? 
-    <Shimmer/> : (
+    // const isOnline = useOnline();
+    // if(!isOnline){
+    //     return <h1>🔴 Offline, please check your internet connection.</h1>
+    // }
+
+    if (!restaurants) return null;
+
+    return restaurants?.length === 0 ? 
+    (<Shimmer/>) : (
         <>
 
-        <div className="searchcontainer">
+        <div className="py-5 bg-orange-400">
             <input 
             type="text"
-            className="searchiput"
+            className="p-1  shadow-md ml-5 border-solid rounded-md "
             placeholder="Search"
             value={searchText}
             onChange={(e) =>{
@@ -49,7 +52,7 @@ const Body = () => {
             />
             
             <button 
-            className="search-btn" 
+            className="bg-slate-900 text-white border-red-500 p-1 rounded-md" 
                 onClick={() =>{
                     const data = filterData(searchText, restaurants);
                     setFilterRestaurants(data);
@@ -59,13 +62,24 @@ const Body = () => {
             > Search
 
             </button>
+            <input value={user.name} onChange={
+                e => setUser({
+                    name: e.target.value,
+                    email: "new@email.com"
+                })
+            } ></input>
         </div>
 
-    <div className="resturantlist">
+    <div className="flex justify-between">
         
         {filterRestaurants.map((restaurant) =>{
-            return <RestaurantCard {...restaurant} key={restaurant.id}/>
-        })};
+            return (
+            <Link to = {"/Restaurant/" + restaurant.id } 
+            key={restaurant.id}>
+                <RestaurantCard {...restaurant} />
+                </Link>
+            );
+            })};
 
     </div>
     </>
